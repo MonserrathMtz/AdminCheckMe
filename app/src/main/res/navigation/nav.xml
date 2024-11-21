@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/frg_carreras">
+
+    <fragment
+        android:id="@+id/frg_home_screen"
+        android:name="com.mbgmonserrath.checkmeaaa.frg_home_screen"
+        android:label="fragment_frg_home_screen"
+        tools:layout="@layout/fragment_frg_home_screen" >
+        <action
+            android:id="@+id/action_frg_home_screen_to_frg_login"
+            app:destination="@id/frg_login" />
+    </fragment>
+    <fragment
+        android:id="@+id/frg_login"
+        android:name="com.mbgmonserrath.checkmeaaa.frg_login"
+        android:label="fragment_frg_login"
+        tools:layout="@layout/fragment_frg_login" >
+        <action
+            android:id="@+id/action_frg_login_to_frg_menu"
+            app:destination="@id/frg_menu" />
+    </fragment>
+    <fragment
+        android:id="@+id/frg_menu"
+        android:name="com.mbgmonserrath.checkmeaaa.frg_menu"
+        android:label="fragment_frg_menu"
+        tools:layout="@layout/fragment_frg_menu" >
+        <action
+            android:id="@+id/action_frg_menu_to_frg_docentes"
+            app:destination="@id/frg_docentes" />
+        <action
+            android:id="@+id/action_frg_menu_to_frg_periodos"
+            app:destination="@id/frg_periodos" />
+        <action
+            android:id="@+id/action_frg_menu_to_frg_carreras"
+            app:destination="@id/frg_carreras" />
+        <action
+            android:id="@+id/action_frg_menu_to_frg_estudiantes"
+            app:destination="@id/frg_estudiantes" />
+        <action
+            android:id="@+id/action_frg_menu_to_frg_familia"
+            app:destination="@id/frg_familia" />
+        <action
+            android:id="@+id/action_frg_menu_to_frg_login"
+            app:destination="@id/frg_login" />
+        <action
+            android:id="@+id/action_frg_menu_to_frg_perfil"
+            app:destination="@id/frg_perfil" />
+    </fragment>
+    <fragment
+        android:id="@+id/frg_carreras"
+        android:name="com.mbgmonserrath.checkmeaaa.frg_carreras"
+        android:label="fragment_frg_carreras"
+        tools:layout="@layout/fragment_frg_carreras" >
+        <action
+            android:id="@+id/action_frg_carreras_to_frg_asignaturas"
+            app:destination="@id/frg_asignaturas" />
+        <action
+            android:id="@+id/action_frg_carreras_to_frg_crud_carreras"
+            app:destination="@id/frg_crud_carreras" />
+    </fragment>
+    <fragment
+        android:id="@+id/frg_asignaturas"
+        android:name="com.mbgmonserrath.checkmeaaa.frg_asignaturas"
+        android:label="fragment_frg_asignaturas"
+        tools:layout="@layout/fragment_frg_asignaturas" />
+    <fragment
+        android:id="@+id/frg_docentes"
+        android:name="com.mbgmonserrath.checkmeaaa.frg_docentes"
+        android:label="fragment_frg_docentes"
+        tools:layout="@layout/fragment_frg_docentes" />
+    <fragment
+        android:id="@+id/frg_estudiantes"
+        android:name="com.mbgmonserrath.checkmeaaa.frg_estudiantes"
+        android:label="fragment_frg_estudiantes"
+        tools:layout="@layout/fragment_frg_estudiantes" />
+    <fragment
+        android:id="@+id/frg_familia"
+        android:name="com.mbgmonserrath.checkmeaaa.frg_familia"
+        android:label="fragment_frg_familia"
+        tools:layout="@layout/fragment_frg_familia" >
+        <action
+            android:id="@+id/action_frg_familia_to_frg_estudiantes"
+            app:destination="@id/frg_estudiantes" />
+        <action
+            android:id="@+id/action_frg_familia_to_frg_docentes"
+            app:destination="@id/frg_docentes" />
+        <action
+            android:id="@+id/action_frg_familia_to_frg_docentes2"
+            app:destination="@id/frg_docentes" />
+        <action
+            android:id="@+id/action_frg_familia_to_frg_periodos"
+            app:destination="@id/frg_periodos" />
+        <action
+            android:id="@+id/action_frg_familia_to_frg_carreras"
+            app:destination="@id/frg_carreras" />
+    </fragment>
+    <fragment
+        android:id="@+id/frg_periodos"
+        android:name="com.mbgmonserrath.checkmeaaa.frg_periodos"
+        android:label="fragment_frg_periodos"
+        tools:layout="@layout/fragment_frg_periodos" />
+    <fragment
+        android:id="@+id/frg_crud_carreras"
+        android:name="com.mbgmonserrath.checkmeaaa.frg_crud_carreras"
+        android:label="fragment_frg_crud_carreras"
+        tools:layout="@layout/fragment_frg_crud_carreras" />
+    <fragment
+        android:id="@+id/frg_perfil"
+        android:name="com.mbgmonserrath.checkmeaaa.frg_perfil"
+        android:label="fragment_frg_perfil"
+        tools:layout="@layout/fragment_frg_perfil" />
+</navigation>
