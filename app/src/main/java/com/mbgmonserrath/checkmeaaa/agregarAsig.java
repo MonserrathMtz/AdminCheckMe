@@ -23,36 +23,45 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+import Modelo.MCarreras;
 import Volley.API;
 import Volley.VolleySingleton;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link frg_crud_carreras#newInstance} factory method to
+ * Use the {@link agregarAsig#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class frg_crud_carreras extends Fragment {
-    private EditText txtNomCorto,txtNomLargo,txtClave;
-    private CardView btnAgregar;
-
+public class agregarAsig extends Fragment {
+    private CardView btnGuardar;
+    private EditText txtNombreCorto,txtNombreLargo,txtClave,txtIdCarrera;
+    private Bundle paquete;
+    private MCarreras objCar;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        btnGuardar=view.findViewById(R.id.create_asig_btnguardar);
+        txtNombreCorto=view.findViewById(R.id.create_asig_txtnomcorto);
+        txtNombreLargo=view.findViewById(R.id.create_asig_txtnomlargo);
+        txtClave=view.findViewById(R.id.create_asig_clave);
+        txtIdCarrera=view.findViewById(R.id.create_asig_idcarrera);
+        paquete=getArguments();
+        if (paquete!=null){
+            objCar= (MCarreras) paquete.getSerializable("objeto");
+            txtIdCarrera.setText(objCar.getIdCarrera()+"");
+            txtIdCarrera.setEnabled(false);
+        }
 
-        txtNomCorto=view.findViewById(R.id.crudcarrera_nombrecorto);
-        txtNomLargo=view.findViewById(R.id.crudcarrera_nombrelargo);
-        txtClave=view.findViewById(R.id.crudcarrera_clave);
-        btnAgregar=view.findViewById(R.id.crud_carrera_agregar);
-        btnAgregar.setOnClickListener(new View.OnClickListener() {
+        btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clicAgregar();
+                clicGuardar();
             }
         });
     }
 
-    private void clicAgregar() {
+    private void clicGuardar() {
 
         AlertDialog.Builder msg = new AlertDialog.Builder(this.getContext());
 
@@ -70,7 +79,7 @@ public class frg_crud_carreras extends Fragment {
         dialog.show();
 
         RequestQueue colaDeSolicitudes= VolleySingleton.getInstance(this.getContext()).getRequestQueue();
-        StringRequest solicitud= new StringRequest(Request.Method.POST, API.CREATECARRERA,
+        StringRequest solicitud= new StringRequest(Request.Method.POST, API.CREATEASIG,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -78,7 +87,7 @@ public class frg_crud_carreras extends Fragment {
                         try {
                             //LEER AQUI EL CONTENIDO DE LA VARIABLE response
                             msg.setTitle("Guardado");
-                            msg.setMessage("Haz creado una carrera");
+                            msg.setMessage("La información se guardó correctamente");
                             msg.setPositiveButton("Aceptar",null);
                             AlertDialog dialog=msg.create();
                             msg.show();
@@ -115,17 +124,16 @@ public class frg_crud_carreras extends Fragment {
                 //PASA PARAMETROS A LA SOLICITUD
 
 
-                param.put("nombreCorto",txtNomCorto.getText().toString());
-                param.put("nombreLargo",txtNomLargo.getText().toString());
+                param.put("nombreCorto",txtNombreCorto.getText()+"");
+                param.put("nombreLargo",txtNombreLargo.getText()+"");
                 param.put("clave",txtClave.getText()+"");
-
+                param.put("idCarrera",txtIdCarrera.getText()+"");
 
                 return param;
             }
         };
         //ENVIA LA SOLICITUD
         colaDeSolicitudes.add(solicitud);
-
 
     }
 
@@ -138,7 +146,7 @@ public class frg_crud_carreras extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public frg_crud_carreras() {
+    public agregarAsig() {
         // Required empty public constructor
     }
 
@@ -148,11 +156,11 @@ public class frg_crud_carreras extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment frg_crud_carreras.
+     * @return A new instance of fragment agregarAsig.
      */
     // TODO: Rename and change types and number of parameters
-    public static frg_crud_carreras newInstance(String param1, String param2) {
-        frg_crud_carreras fragment = new frg_crud_carreras();
+    public static agregarAsig newInstance(String param1, String param2) {
+        agregarAsig fragment = new agregarAsig();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -173,6 +181,6 @@ public class frg_crud_carreras extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_frg_crud_carreras, container, false);
+        return inflater.inflate(R.layout.fragment_agregar_asig, container, false);
     }
 }

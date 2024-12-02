@@ -2,11 +2,45 @@ package com.mbgmonserrath.checkmeaaa;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import Modelo.MAsignatura;
+import Modelo.MCarreras;
+import Volley.API;
+import Volley.VolleySingleton;
+import adapter.AdapterAsignatura;
+import adapter.AdapterCarreras;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +48,194 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class frg_asignaturas extends Fragment {
+
+    private EditText txtFiltro;
+    private AdapterAsignatura adapter;
+    private ArrayList<MAsignatura> lista;
+    private Bundle paquete;
+    private RecyclerView rec;
+    private MAsignatura objAsig;
+    private ImageView btnActualizar;
+    private MCarreras objCar;
+    private FloatingActionButton btnAdd;
+    private NavController navegador;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        txtFiltro=view.findViewById(R.id.frg_asignatura_txtbuscar);
+        rec=view.findViewById(R.id.frg_asignaturas_recycler_view);
+        btnActualizar=view.findViewById(R.id.asignatura_btnactualizar);
+        paquete = new Bundle();//Creacion del Bundle
+        btnAdd=view.findViewById(R.id.add_asignatura);
+        navegador= Navigation.findNavController(view);
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                paquete=getArguments();
+                if (paquete!=null){
+                    objCar= (MCarreras) paquete.getSerializable("objeto");
+
+                }
+                paquete.putSerializable("objeto",objCar);
+                navegador.navigate(R.id.action_frg_asignaturas_to_agregarAsig,paquete);
+            }
+        });
+
+
+
+        paquete=getArguments();
+        if (paquete!=null){
+            objCar= (MCarreras) paquete.getSerializable("objeto");
+
+        }
+
+        lista=llenadoDesdeBD();
+
+        txtFiltro.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                buscador(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        btnActualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lista=llenadoDesdeBD();
+            }
+        });
+
+
+    }
+
+    private ArrayList<MAsignatura> llenadoDesdeBD() {
+        ArrayList<MAsignatura> lista=new ArrayList<MAsignatura>();
+
+        //Crea un AlertDialog
+        AlertDialog.Builder msg = new AlertDialog.Builder(this.getContext());
+
+        // Crear un ProgressBar
+        ProgressBar progressBar = new ProgressBar(this.getContext());
+        progressBar.setIndeterminate(true); // Estilo de carga indeterminada
+
+        // Crear el AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        builder.setTitle("Por favor, espera");
+        builder.setMessage("Conectandose con el servidor...");
+        builder.setView(progressBar);
+        builder.setCancelable(false); // Evitar que se pueda cancelar
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        RequestQueue colaDeSolicitudes= VolleySingleton.getInstance(this.getContext()).getRequestQueue();
+        StringRequest solicitud= new StringRequest(Request.Method.POST, API.READASIG,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        dialog.dismiss();//apaga el cuadro de dialogo
+                        try {
+                            //LEER AQUI EL CONTENIDO DE LA VARIABLE response
+
+                            JSONObject contenido = new JSONObject(response);
+                            JSONArray array=contenido.getJSONArray("contenido");
+                            MAsignatura obj=new MAsignatura();
+                            for (int i = 0; i < array.length(); i++) {
+                                obj=new MAsignatura();
+                                JSONObject pos=new JSONObject(array.getString(i));
+
+
+                                obj.setIdAsignatura(pos.getInt("idAsignatura"));
+                                obj.setNombreCorto(pos.getString("nombreCorto"));
+                                obj.setNombreLargo(pos.getString("nombreLargo"));
+                                obj.setClave(pos.getString("clave"));
+                                obj.setIdCarrera(pos.getInt("idCarrera"));
+                                Log.e("LLENADO DEL OBEJTO",obj.toString());
+
+                                lista.add(obj);
+                            }
+
+                            rec.setHasFixedSize(true);
+                            rec.setLayoutManager(new LinearLayoutManager(getContext()));
+                            adapter=new AdapterAsignatura(lista);
+                            rec.setAdapter(adapter);
+
+
+
+
+
+
+
+                        }catch (Exception ex){
+                            //DETECTA ERRORES EN LA LECTURA DEL ARCHIVO JSON
+
+                            msg.setTitle("Error");
+                            msg.setMessage("La información no se pudo leer");
+                            msg.setPositiveButton("Aceptar",null);
+                            AlertDialog dialog=msg.create();
+                            msg.show();
+                            Log.e("Error",ex.toString());
+
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+                // DETECTA ERRORES EN LA COMUNICACIÓN
+                msg.setTitle("Error");
+                msg.setMessage("No se pudo conectar con el servidor");
+                msg.setPositiveButton("Aceptar",null);
+                AlertDialog dialog=msg.create();
+                msg.show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> param = new HashMap<String, String>();
+                //PASA PARAMETROS A LA SOLICITUD
+                param.put("idCarrera",objCar.getIdCarrera()+"");
+                return param;
+            }
+        };
+        //ENVIA LA SOLICITUD
+        colaDeSolicitudes.add(solicitud);
+
+
+        return lista;
+    }
+    private void buscador(String s) {
+        ArrayList<MAsignatura> lista2 = new ArrayList<>();
+
+        if (s != null && !s.isEmpty()) {
+            // Convertimos 's' a minúsculas para una búsqueda más flexible
+            String searchTerm = s.toLowerCase();
+
+            for (MAsignatura gpo : lista) {
+                // Verificamos que los valores no sean nulos antes de hacer contains()
+                if (gpo.getClave().toLowerCase().contains(searchTerm) ||
+                        gpo.getNombreCorto().toLowerCase().contains(searchTerm)) {
+
+                    lista2.add(gpo);
+                }
+            }
+        }
+
+        // Enviar la lista filtrada al adaptador
+        adapter.filtro(lista2);
+    }
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

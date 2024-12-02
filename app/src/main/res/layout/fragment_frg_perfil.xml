@@ -6,9 +6,131 @@
     tools:context=".frg_perfil">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/tertiary"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
 
+
+
+
+        <!-- TODO: Update blank fragment layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="20dp"
+            android:background="@drawable/fondo_tutor1"
+            android:orientation="vertical"
+            android:layout_margin="20dp"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="15dp"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/perfil_nombre"
+                    android:text="Nombre"
+                    android:gravity="center"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:textSize="30sp"
+                    android:layout_marginBottom="16dp"/>
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="16dp"
+                    android:elevation="4dp"
+                    android:padding="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/perfil_mtro"
+                    android:id="@+id/perfil_doc_img"
+                    />
+
+                <!-- Datos personales -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Titulo"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:id="@+id/miPerfil_titulo"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Correo"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:id="@+id/miPerfil_correo"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Numero de trabajador"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:id="@+id/miPerfil_NumTrabajador"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/per_doc_txtgenero"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    />
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="16dp">
+
+                    <Button
+                        android:id="@+id/btn_editarDatos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Editar Datos"
+                        android:backgroundTint="#54d9df"
+                        android:textColor="#000000"
+                        android:layout_marginRight="8dp"
+                        android:visibility="gone"/>
+
+                    <Button
+                        android:id="@+id/btn_guardarDatos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Guardar Datos"
+                        android:backgroundTint="#54d9df"
+                        android:textColor="#000000"
+                        android:layout_marginLeft="8dp"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <!--COMIENZA LA ISLA DE BOTONES -->
+        <!--TERMINA LA ISLA DE BOTONES -->
+    </LinearLayout>
 </FrameLayout>

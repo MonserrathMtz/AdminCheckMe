@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:gravity="center"
-                    android:text="Dar de Alta"
+                    android:text="Crear Carrera"
                     android:textColor="#000000"
                     android:textSize="25sp"
                     android:textStyle="bold" />
@@ -52,27 +52,17 @@
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/grupos" />
 
-                    <TextView
+                    <EditText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:id="@+id/crudG_txtIdGrupo"
-                        android:hint="id Grupo"
-                        android:visibility="gone"
+                        android:id="@+id/crudcarrera_nombrecorto"
+                        android:hint="Nombre Corto"
                         android:textColorHint="@color/secondary"
                         android:textColor="@color/tertiary"
                         android:paddingStart="8dp"
                         android:paddingLeft="8dp" />
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:id="@+id/crudG_txtClave"
-                        android:hint="Grupo"
-                        android:textColorHint="@color/secondary"
-                        android:textColor="@color/tertiary"
-                        android:paddingStart="8dp"
-                        android:paddingLeft="8dp" />
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -101,9 +91,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Estudiante"
-                        android:enabled="false"
-                        android:id="@+id/crudG_txtNEstudiante"
+                        android:hint="Nombre Largo"
+
+                        android:id="@+id/crudcarrera_nombrelargo"
                         android:textColorHint="@color/secondary"
                         android:textColor="@color/tertiary"
                         android:paddingStart="8dp"
@@ -125,8 +115,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Oportunidad"
-                        android:id="@+id/crudG_txtOp"
+                        android:hint="CLAVE"
+                        android:id="@+id/crudcarrera_clave"
                         android:textColorHint="@color/secondary"
                         android:textColor="@color/tertiary"
                         android:paddingStart="8dp"
@@ -140,12 +130,13 @@
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/crud_gpo_btn_alta"
+                        android:id="@+id/crud_carrera_agregar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="0dp"
                         android:background="@color/tertiary"
                         android:clickable="true"
+
                         app:cardBackgroundColor="@color/white">
                         <LinearLayout
                             android:layout_width="250dp"
@@ -163,7 +154,7 @@
                                 android:layout_marginStart="70dp"
                                 android:id="@+id/perfil_txtE_G"
                                 android:gravity="center"
-                                android:text="Alta"
+                                android:text="Agregar"
                                 android:textColor="@color/white"
                                 android:textSize="20sp"
                                 android:textStyle="bold">

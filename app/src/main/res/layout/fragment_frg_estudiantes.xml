@@ -64,16 +64,17 @@
                         android:src="@drawable/usuario" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/frg_periodos_recycler_view"
+                android:id="@+id/frg_estudiante_recycler_view"
                 android:layout_width="match_parent"
+                android:layout_height="285dp"
                 android:layout_margin="20dp"
                 android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:textAlignment="center"
                 android:background="@drawable/fondo_boton_rectan"
-                android:layout_height="285dp"
-                android:padding="8dp"/>
+                android:gravity="center"
+                android:padding="8dp"
+                android:textAlignment="center" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

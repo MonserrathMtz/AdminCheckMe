@@ -2,11 +2,20 @@ package com.mbgmonserrath.checkmeaaa;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import Modelo.MDocente;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +23,16 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class frg_perfil extends Fragment {
+
+    private NavController navegador;
+
+    private Bundle paquete;
+    private CardView btnBack;
+    private MDocente obj;
+    private TextView txtNombre, txtTitulo, txtCorreo, txtNumT, txtGenero;
+    private ImageView btnMenu, btnGrupos, btnTutorados, btnAddTut, imgPerfil;
+    private int genero;
+    private String gen;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,5 +79,37 @@ public class frg_perfil extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frg_perfil, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navegador = Navigation.findNavController(view);
+        txtNombre = view.findViewById(R.id.perfil_nombre);
+        txtTitulo = view.findViewById(R.id.miPerfil_titulo);
+        txtCorreo = view.findViewById(R.id.miPerfil_correo);
+        txtNumT = view.findViewById(R.id.miPerfil_NumTrabajador);
+        txtGenero = view.findViewById(R.id.per_doc_txtgenero);
+        imgPerfil = view.findViewById(R.id.perfil_doc_img);
+
+        paquete = this.getArguments();
+        if (paquete != null) {
+            obj = (MDocente) paquete.getSerializable("user");
+            txtNombre.setText(obj.getGrado() + " " + obj.getApp() + " " + obj.getApm() + " " + obj.getNombre());
+            txtTitulo.setText("Titulo: " + obj.getGrado() + " " + obj.getTitulo());
+            txtCorreo.setText("Correo: " + obj.getCorreo());
+            txtNumT.setText("Numero de trabajador: " + obj.getNumTrabajador());
+
+
+            genero = obj.getGenero();
+            if (genero == 0) {
+                imgPerfil.setImageResource(R.drawable.perfil_mtro);
+                gen = "Masculino";
+            } else if (genero == 1) {
+                imgPerfil.setImageResource(R.drawable.perfil_mtra);
+                gen = "Femenino";
+            }
+            txtGenero.setText("Genero:  " + gen);
+        }
     }
 }

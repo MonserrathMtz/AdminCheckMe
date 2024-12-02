@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,21 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import Modelo.MDocente;
+import Volley.API;
+import Volley.VolleySingleton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +44,7 @@ public class frg_login extends Fragment {
     private CardView btnEntrar;
     private NavController navegador;
     private Bundle paquete;
+    private TextView btnRecupera;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,6 +100,16 @@ public class frg_login extends Fragment {
         navegador = Navigation.findNavController(view);
         txtContrasenia = view.findViewById(R.id.contrasenia);
         txtUsuario = view.findViewById(R.id.username);
+        btnRecupera = view.findViewById(R.id.btn_recupera);
+        btnRecupera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navegador.navigate(R.id.action_frg_login_to_recupera_Contrasenia);
+            }
+        });
+
+        txtUsuario.setText("marioPB@itsoeh.edu.mx");
+        txtContrasenia.setText("12345");
         paquete = new Bundle();
         btnEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,111 +120,119 @@ public class frg_login extends Fragment {
     }
 
         private void clicEntrar() {
-            //navegador.navigate(R.id.action_frg_login_to_frg_menu);
             String correo = this.txtUsuario.getText().toString();
-            //this.recuperarEstudiante(correo);
+            this.recuperarDocente(correo);
         }
 
-        /*private void recuperarEstudiante(String correo) {
+    private void recuperarDocente(String correo){
+        MDocente obj = new MDocente();
+        Log.e("PASO 0", correo);
+        //ArrayList<MDocente> lista=new ArrayList<MDocente>();
 
-            //MEstudiante obj = new MEstudiante();
-            //ArrayList<MEstudiante> lista = new ArrayList<MEstudiante>();
-            AlertDialog.Builder msg = new AlertDialog.Builder(this.getContext());
+        //Crea un AlertDialog
+        AlertDialog.Builder msg = new AlertDialog.Builder(this.getContext());
 
-            // Crear un ProgressBar
-            ProgressBar progressBar = new ProgressBar(this.getContext());
-            progressBar.setIndeterminate(true); // Estilo de carga indeterminada
+        // Crear un ProgressBar
+        ProgressBar progressBar = new ProgressBar(this.getContext());
+        progressBar.setIndeterminate(true); // Estilo de carga indeterminada
 
-            // Crear el AlertDialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-            builder.setTitle("Por favor, espera");
-            builder.setMessage("Conectandose con el servidor...");
-            builder.setView(progressBar);
-            builder.setCancelable(false); // Evitar que se pueda cancelar
-            AlertDialog dialog = builder.create();
-            dialog.show();
+        // Crear el AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        builder.setTitle("Por favor, espera");
+        builder.setMessage("Conectandose con el servidor...");
+        builder.setView(progressBar);
+        builder.setCancelable(false); // Evitar que se pueda cancelar
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
-            RequestQueue colaDeSolicitudes= VolleySingleton.getInstance(this.getContext()).getRequestQueue();
-            StringRequest solicitud= new StringRequest(Request.Method.POST, API.BUSCARE,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            dialog.dismiss();//apaga el cuadro de dialogo
-                            try {
-                                //LEER AQUI EL CONTENIDO DE LA VARIABLE response
-                                JSONObject contenido = new JSONObject(response);
-                                JSONArray array=contenido.getJSONArray("contenido");
-                                MEstudiante obj = new MEstudiante();
-                                for (int i = 0; i < array.length(); i++) {
-                                    obj = new MEstudiante();
-                                    JSONObject pos = new JSONObject(array.getString(i));
-                                    obj.setIdEstudiante(pos.getInt("idEstudiante"));
-                                    obj.setMatricula(pos.getInt("matricula"));
-                                    obj.setNombre(pos.getString("nombre"));
-                                    obj.setApp(pos.getString("app"));
-                                    obj.setApm(pos.getString("apm"));
-                                    obj.setCorreo(pos.getString("correo"));
-                                    obj.setEdo(pos.getString("edo"));
-                                    obj.setMuni(pos.getString("muni"));
-                                    obj.setCol(pos.getString("col"));
-                                    obj.setGen(pos.getInt("gen"));
-                                    obj.setContrasenia(pos.getString("contrasenia"));
-                                    obj.setIdCarrera(pos.getInt("idCarrera"));
-                                    //lista.add(obj);
-                                }
-                                if(obj.getCorreo()==null){//Si el docente es nulo
-                                    AlertDialog.Builder msg = new AlertDialog.Builder(getContext());//Crea un cuadro de dialogo
-                                    msg.setTitle("Error");//Le pone un titulo
-                                    msg.setMessage("El Usuario no Existe");//Le pone un mensaje
-                                    msg.setPositiveButton("Aceptar",null);//Le pone un boton
-                                    AlertDialog dialog = msg.create();//Crea el cuadro de dialogo
-                                    dialog.show();//Muestra el cuadro de dialogo
-                                } //Si el docente no es nulo
+        RequestQueue colaDeSolicitudes= VolleySingleton.getInstance(this.getContext()).getRequestQueue();
+        StringRequest solicitud= new StringRequest(Request.Method.POST, API.BUSCARDOC,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        dialog.dismiss();//apaga el cuadro de dialogo
+                        try {
+                            //LEER AQUI EL CONTENIDO DE LA VARIABLE response
+                            Log.e("PASO 1", response);
+                            JSONObject contenido = new JSONObject(response);
 
-                                if(txtContrasenia.getText().toString().equals(obj.getContrasenia())){//Si la contraseña es correcta
-                                    paquete.putSerializable("user",obj);//Pasa el nombre del usuario a la siguiente pantalla
-                                    navegador.navigate(R.id.action_frg_loginn_to_frg_menu,paquete);//Navega a la siguiente pantalla
+                            JSONArray array=contenido.getJSONArray("contenido");
+                            MDocente obj = new MDocente();
+                            for (int i = 0; i < array.length(); i++) {
+                                obj = new MDocente();
+                                Log.e("PASO 2", obj.toString());
+                                JSONObject pos = new JSONObject(array.getString(i));
+                                obj.setIdDocente(pos.getInt("idDocente"));
+                                Log.e("id",obj.getIdDocente()+"");
+                                obj.setNumTrabajador(pos.getString("numTrabajador"));
+                                obj.setNombre(pos.getString("nombre"));
+                                obj.setApp(pos.getString("app"));
+                                obj.setApm(pos.getString("apm"));
+                                obj.setCorreo(pos.getString("correo"));
+                                obj.setGrado(pos.getString("grado"));
+                                obj.setTitulo(pos.getString("titulo"));
 
-                                }else{//Si la contraseña es incorrecta
-                                    AlertDialog.Builder msg = new AlertDialog.Builder(getContext());//Crea un cuadro de dialogo
-                                    msg.setTitle("Error");//Le pone un titulo
-                                    msg.setMessage("Contraseña incorrecta");//Le pone un mensaje
-                                    msg.setPositiveButton("Aceptar",null);//Le pone un boton
-                                    AlertDialog dialog = msg.create();//Crea el cuadro de dialogo
-                                    dialog.show();//Muestra el cuadro de dialogo
-                                }//Si la contraseña es incorrecta
-                            }catch (Exception ex){
-                                //DETECTA ERRORES EN LA LECTURA DEL ARCHIVO JSON
-                                msg.setTitle("Error");
-                                msg.setMessage("No se pudo leer el archivo JSON*-*");
-                                msg.setPositiveButton("Aceptar",null);
-                                AlertDialog dialog = msg.create();
-                                msg.show();
-
+                                obj.setContrasenia(pos.getString("contrasenia"));
+                                obj.setRol(pos.getInt("rol"));
+                                Log.e("PASO 3", obj.toString());
                             }
 
+                            if (obj.getCorreo()==null){// Esto es en caso de que el usuario no exista
+
+                                msg.setTitle("Error");
+                                msg.setMessage("El usuario no existe");
+                                msg.setPositiveButton("Aceptar",null);
+                                AlertDialog dialog=msg.create();
+                                msg.show();
+                            }
+                            if(txtContrasenia.getText().toString().equals(obj.getContrasenia())){
+                                paquete.putSerializable("user",obj);
+                                navegador.navigate(R.id.action_frg_login_to_frg_menu,paquete);
+                            }
+                            else{// Esto es en caso de que la contraseña sea incorrecta
+
+                                msg.setTitle("Error");
+                                msg.setMessage("Contraseña incorrecta");
+                                msg.setPositiveButton("Aceptar",null);
+                                AlertDialog dialog=msg.create();
+                                msg.show();
+                            }
+
+                        }catch (Exception ex){
+                            //DETECTA ERRORES EN LA LECTURA DEL ARCHIVO JSON
+                            Log.e("PASO 5", ex.getMessage());
+                            msg.setTitle("Error");
+                            msg.setMessage("La información no se pudo leer");
+                            msg.setPositiveButton("Aceptar",null);
+                            AlertDialog dialog=msg.create();
+                            msg.show();
+
                         }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    dialog.dismiss();
-                    // DETECTA ERRORES EN LA COMUNICACIÓN
-                    msg.setTitle("Error");
-                    msg.setMessage("No se pudo leer el archivo JSON:(");
-                    msg.setPositiveButton("Aceptar",null);
-                    AlertDialog dialog = msg.create();
-                    msg.show();
-                }
-            }){
-                @Override
-                protected Map<String, String> getParams(){
-                    Map<String, String> param=new HashMap<String,String>();
-                    //PASA PARAMETROS A LA SOLICITUD
-                    param.put("correo",correo);
-                    return param;
-                }
-            };
-            //ENVIA LA SOLICITUD
-            colaDeSolicitudes.add(solicitud);
-        }*/
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+                // DETECTA ERRORES EN LA COMUNICACIÓN
+                msg.setTitle("Error");
+                msg.setMessage("No se pudo conectar con el servidor");
+                msg.setPositiveButton("Aceptar",null);
+                AlertDialog dialog=msg.create();
+                msg.show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String, String> param=new HashMap<String,String>();
+                //PASA PARAMETROS A LA SOLICITUD
+                param.put("correo",correo);
+                return param;
+            }
+        };
+        //ENVIA LA SOLICITUD
+        colaDeSolicitudes.add(solicitud);
+
+
+    }
+
     }

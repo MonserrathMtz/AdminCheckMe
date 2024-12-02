@@ -126,5 +126,24 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¿Olvidaste tu contraseña?"
+               android:textColor="@color/pistache"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:clickable="true"
+                android:id="@+id/btn_recupera"
+
+                />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

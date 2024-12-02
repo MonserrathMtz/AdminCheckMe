@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/frg_carreras">
+    app:startDestination="@id/frg_home_screen">
 
     <fragment
         android:id="@+id/frg_home_screen"
@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_frg_login_to_frg_menu"
             app:destination="@id/frg_menu" />
+        <action
+            android:id="@+id/action_frg_login_to_recupera_Contrasenia"
+            app:destination="@id/recupera_Contrasenia" />
     </fragment>
     <fragment
         android:id="@+id/frg_menu"
@@ -66,7 +69,11 @@
         android:id="@+id/frg_asignaturas"
         android:name="com.mbgmonserrath.checkmeaaa.frg_asignaturas"
         android:label="fragment_frg_asignaturas"
-        tools:layout="@layout/fragment_frg_asignaturas" />
+        tools:layout="@layout/fragment_frg_asignaturas" >
+        <action
+            android:id="@+id/action_frg_asignaturas_to_agregarAsig"
+            app:destination="@id/agregarAsig" />
+    </fragment>
     <fragment
         android:id="@+id/frg_docentes"
         android:name="com.mbgmonserrath.checkmeaaa.frg_docentes"
@@ -113,4 +120,14 @@
         android:name="com.mbgmonserrath.checkmeaaa.frg_perfil"
         android:label="fragment_frg_perfil"
         tools:layout="@layout/fragment_frg_perfil" />
+    <fragment
+        android:id="@+id/agregarAsig"
+        android:name="com.mbgmonserrath.checkmeaaa.agregarAsig"
+        android:label="fragment_agregar_asig"
+        tools:layout="@layout/fragment_agregar_asig" />
+    <fragment
+        android:id="@+id/recupera_Contrasenia"
+        android:name="com.mbgmonserrath.checkmeaaa.recupera_Contrasenia"
+        android:label="fragment_recupera__contrasenia"
+        tools:layout="@layout/fragment_recupera__contrasenia" />
 </navigation>

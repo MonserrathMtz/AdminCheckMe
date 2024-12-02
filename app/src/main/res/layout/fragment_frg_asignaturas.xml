@@ -13,12 +13,27 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/fondo_blanco1"
         android:gravity="center">
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/materia">
-        </ImageView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/materia">
+
+            </ImageView>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/add_asignatura"
+                android:layout_margin="16dp"
+                android:src="@drawable/plus"
+                />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/loginTitle"
             android:layout_width="wrap_content"
@@ -57,10 +72,12 @@
                         android:id="@+id/frg_asignatura_txtbuscar"
                         android:textSize="18sp" />
                     <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="24dp"
-                        android:layout_weight="0.2"
-                        android:src="@drawable/usuario" />
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:clickable="true"
+                        android:id="@+id/asignatura_btnactualizar"
+
+                        android:src="@drawable/actualizar" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
             <androidx.recyclerview.widget.RecyclerView
@@ -71,8 +88,9 @@
                 android:gravity="center"
                 android:textAlignment="center"
                 android:background="@drawable/fondo_boton_rectangulo1"
-                android:layout_height="285dp"
+                android:layout_height="400dp"
                 android:padding="8dp"/>
         </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

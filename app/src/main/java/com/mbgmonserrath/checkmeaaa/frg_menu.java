@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
+import Modelo.MDocente;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link frg_menu#newInstance} factory method to
@@ -26,6 +28,9 @@ public class frg_menu extends Fragment {
     private TextView txtNoTrabajador, txtNombre, txtCorreo;
     private NavController navengador;
     private Bundle paquete;
+
+    private MDocente obj;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,11 +93,21 @@ public class frg_menu extends Fragment {
         txtNombre = view.findViewById(R.id.menu_nombre);
         txtCorreo = view.findViewById(R.id.menu_correo);
         navengador = Navigation.findNavController(view);
-        paquete = this.getArguments();
+        paquete= this.getArguments();
+        if(paquete!=null){
+            obj=(MDocente) paquete.getSerializable("user");
+            txtNombre.setText(obj.getApp()+" "+obj.getApm()+" "+obj.getNombre());
+
+            txtCorreo.setText(obj.getCorreo());
+            txtNoTrabajador.setText(obj.getNumTrabajador());
+        }
         btnPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navengador.navigate(R.id.action_frg_menu_to_frg_perfil);
+                if(paquete!=null){
+                    paquete.putSerializable("user",obj);
+                }
+                navengador.navigate(R.id.action_frg_menu_to_frg_perfil,paquete);
             }
         });
         btnCarreras.setOnClickListener(new View.OnClickListener() {

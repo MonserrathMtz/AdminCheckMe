@@ -13,81 +13,118 @@
         android:layout_margin="8dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="15dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="270dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginEnd="10dp"
-                        android:textColor="@color/black"
-                        android:text="Clave:"
-                        >
-                    </TextView>
-                    <TextView
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="10dp"
+                            android:textColor="@color/black"
+                            android:text="Nombre:"
+                            >
+                        </TextView>
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:id="@+id/periodos_nombre"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="10dp"
+                            android:textColor="@color/black"
+                            android:text="XO4B"
+                            >
+                        </EditText>
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textSize="20sp"
-                        android:id="@+id/periodos_clave"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginEnd="10dp"
-                        android:textColor="@color/black"
-                        android:text="XO4B"
-                        >
-                    </TextView>
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="10dp"
+                            android:textColor="@color/black"
+                            android:text="Fecha Inicio:"
+                            >
+                        </TextView>
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:id="@+id/periodo_fecha"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="1dp"
+                            android:textColor="@color/black"
+                            android:text="Verano"
+                            >
+                        </EditText>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginStart="25dp"
+                            android:layout_marginEnd="10dp"
+                            android:textColor="@color/black"
+                            android:text="Fecha Final:"
+                            >
+                        </TextView>
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:id="@+id/periodo_fecha_final"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginEnd="1dp"
+                            android:textColor="@color/black"
+                            android:text="Verano"
+                            >
+                        </EditText>
+                    </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_marginStart="25dp"
-                        android:layout_marginEnd="10dp"
-                        android:textColor="@color/black"
-                        android:text="Periodo:"
-                        >
-                    </TextView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="20sp"
-                        android:id="@+id/periodo_nombre"
-                        android:layout_marginStart="2dp"
-                        android:layout_marginEnd="1dp"
-                        android:textColor="@color/black"
-                        android:text="Verano"
-                        >
-                    </TextView>
-                </LinearLayout>
+
+
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:gravity="center">
                 <ImageView
                     android:layout_width="wrap_content"
@@ -108,8 +145,34 @@
                     android:focusable="true"
                     android:id="@+id/periodo_eliminar">
                 </ImageView>
-            </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Editar "
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:layout_margin="15dp"
+                        />
+
+                    <Switch
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/sw_editar_periodo"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
+
+
+
+
     </androidx.cardview.widget.CardView>
 </LinearLayout>
